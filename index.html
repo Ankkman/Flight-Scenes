@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Flight Delay Check</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header container">
+    <div class="brand">
+      <div class="logo">✈️</div>
+      <div class="brand-text">
+        <strong>Flight delay checker</strong>
+        <span class="muted"></span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="inputSection" class="hero container">
+      <h1 class="hero-title">Will my flight be delayed?</h1>
+      <p class="hero-subtitle">Check delay risk and plan alternatives in seconds.</p>
+
+      <form id="flightForm" class="card form-card" novalidate>
+        <div class="field-row">
+          <label for="flightNumber" class="field-label">Flight number</label>
+          <input id="flightNumber" name="flightNumber" class="input" placeholder="e.g., AI302" autocomplete="off" />
+        </div>
+
+        <details class="advanced">
+          <summary class="advanced-summary">Search by Route or Date</summary>
+          <div class="advanced-grid">
+            <div class="field-row">
+              <label for="date" class="field-label">Date</label>
+              <input id="date" name="date" type="date" class="input" />
+            </div>
+            <div class="field-row">
+              <label for="airline" class="field-label">Airline</label>
+              <input id="airline" name="airline" class="input" placeholder="e.g., Air India" />
+            </div>
+            <div class="field-row">
+              <label for="origin" class="field-label">From</label>
+              <input id="origin" name="origin" class="input" placeholder="e.g., DEL" />
+            </div>
+            <div class="field-row">
+              <label for="dest" class="field-label">To</label>
+              <input id="dest" name="dest" class="input" placeholder="e.g., BOM" />
+            </div>
+          </div>
+        </details>
+
+        <div class="actions">
+          <button type="submit" class="btn primary">Check my flight</button>
+          <button type="reset" class="btn">Clear</button>
+        </div>
+        <p class="hint">Tip: entering a flight number is the fastest.</p>
+      </form>
+    </section>
+
+    <section id="resultsSection" class="container results hidden" aria-live="polite">
+      <div class="results-top-action">
+        <button id="backButton" class="btn back-btn">← Check Another Flight</button>
+      </div>
+
+      <header id="resultsHeader" class="results-header">
+        </header>
+
+      <div class="results-grid">
+        <div id="statusCard" class="card status-card">
+          </div>
+
+        <div id="alternativesContainer" class="card">
+          <div class="flex-between">
+            <h3 class="card-title">Better options for you</h3>
+            <button class="ghost-btn" id="refreshAlts" aria-label="Refresh alternatives">↻</button>
+          </div>
+          <div id="altList" class="alt-list">
+            </div>
+        </div>
+
+        <div id="cabContainer" class="card cab">
+          <h3 class="card-title">Cab recommendation</h3>
+          <p id="cabText">If delay is high, we’ll suggest rescheduling your pickup.</p>
+          <div class="actions">
+            <button class="btn">Not now</button>
+            <button class="btn primary">Reschedule</button>
+          </div>
+        </div>
+        
+       
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
