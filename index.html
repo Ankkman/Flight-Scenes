@@ -10,56 +10,72 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="site-header container">
+  <header id="resultsFixedHeader" class="fixed-header hidden">
+    <div class="container">
+      <div class="brand">
+        <div class="logo">✈️</div>
+        <div class="brand-text">
+          <strong>Flight Delay Checker</strong>
+        </div>
+      </div>
+      <button id="backButtonFixed" class="btn">← New Search</button>
+    </div>
+  </header>
+
+  <header id="siteHeader" class="site-header container">
     <div class="brand">
       <div class="logo">✈️</div>
       <div class="brand-text">
-        <strong>Flight delay checker</strong>
-        <span class="muted"></span>
+        <strong>Flight Delay Checker</strong>
       </div>
     </div>
   </header>
 
   <main>
+
     <section id="inputSection" class="hero container">
-      <h1 class="hero-title">Will my flight be delayed?</h1>
-      <p class="hero-subtitle">Check delay risk and plan alternatives in seconds.</p>
+  <h1 class="hero-title">Will my flight be delayed?</h1>
+  <p class="hero-subtitle">Check delay risk and plan alternatives in seconds.</p>
 
-      <form id="flightForm" class="card form-card" novalidate>
-        <div class="field-row">
-          <label for="flightNumber" class="field-label">Flight number</label>
-          <input id="flightNumber" name="flightNumber" class="input" placeholder="e.g., AI302" autocomplete="off" />
-        </div>
+  <form id="flightForm" class="card form-card" novalidate>
+    <div class="form-grid">
+      <div class="field-row">
+        <label for="date" class="field-label">Date</label>
+        <input id="date" name="date" type="date" class="input" />
+      </div>
 
-        <details class="advanced">
-          <summary class="advanced-summary">Search by Route or Date</summary>
-          <div class="advanced-grid">
-            <div class="field-row">
-              <label for="date" class="field-label">Date</label>
-              <input id="date" name="date" type="date" class="input" />
-            </div>
-            <div class="field-row">
-              <label for="airline" class="field-label">Airline</label>
-              <input id="airline" name="airline" class="input" placeholder="e.g., Air India" />
-            </div>
-            <div class="field-row">
-              <label for="origin" class="field-label">From</label>
-              <input id="origin" name="origin" class="input" placeholder="e.g., DEL" />
-            </div>
-            <div class="field-row">
-              <label for="dest" class="field-label">To</label>
-              <input id="dest" name="dest" class="input" placeholder="e.g., BOM" />
-            </div>
-          </div>
-        </details>
+      <div class="field-row">
+        <label for="airline" class="field-label">Airline Code</label>
+        <input id="airline" name="airline" class="input" placeholder="e.g., AA" />
+      </div>
 
-        <div class="actions">
-          <button type="submit" class="btn primary">Check my flight</button>
-          <button type="reset" class="btn">Clear</button>
-        </div>
-        <p class="hint">Tip: entering a flight number is the fastest.</p>
-      </form>
-    </section>
+      <div class="field-row">
+        <label for="origin" class="field-label">Origin Airport</label>
+        <input id="origin" name="origin" class="input" placeholder="e.g., ATL" />
+      </div>
+
+      <div class="field-row">
+        <label for="dest" class="field-label">Destination Airport</label>
+        <input id="dest" name="dest" class="input" placeholder="e.g., LAX" />
+      </div>
+      
+      <div class="field-row">
+        <label for="sched_departure" class="field-label">Scheduled Departure</label>
+        <input id="sched_departure" name="sched_departure" type="time" class="input" />
+      </div>
+      
+      <div class="field-row">
+        <label for="desired_arrival" class="field-label">Desired Arrival</label>
+        <input id="desired_arrival" name="desired_arrival" type="time" class="input" />
+      </div>
+    </div>
+
+    <div class="actions">
+      <button type="submit" class="btn primary">Check my flight</button>
+      <button type="reset" class="btn">Clear</button>
+    </div>
+  </form>
+</section>
 
     <section id="resultsSection" class="container results hidden" aria-live="polite">
       <div class="results-top-action">
@@ -90,12 +106,9 @@
             <button class="btn primary">Reschedule</button>
           </div>
         </div>
-        
-       
       </div>
     </section>
   </main>
-
   <script src="app.js" defer></script>
 </body>
 </html>
