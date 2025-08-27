@@ -1,18 +1,19 @@
 :root {
-  /* Your New Minimalist & Colorful Palette */
+  /* New Refined Color Palette */
   --bg: #ffffff;
   --card: #ffffff;
-  --text: #432f70;          /* Indigo */
-  --muted: #713770;         /* Purple Haze */
-  --primary: #b34270;       /* Fuchsia */
-  --success: #198754;       /* Restored to Original Green */
-  --warn: #f59e0b;          /* Restored to Original Orange */
-  --danger: #e95670;         /* Rose Red */
+  --text: #333745;          /* Dark Slate */
+  --muted: #6a7081;         /* Muted Slate */
+  --primary: #3a5a9a;       /* Dusk Blue */
+  --success: #198754;       /* Original Green */
+  --warn: #f7b733;          /* Golden Orange (from sunset) */
+  --danger: #db1f48;         /* Red */
   --border-color: #dee2e6;
-  --ring: rgba(179, 66, 112, .25); /* Transparent Fuchsia */
-  --shadow: 0 4px 20px rgba(0, 0, 0, .08);
+  --ring: rgba(58, 90, 154, .25); /* Transparent Dusk Blue */
+  --shadow: 0 4px 20px rgba(0, 0, 0, .1);
   --radius: 16px;
 }
+
 * { box-sizing: border-box; }
 html, body { height: 100%; scroll-behavior: smooth; }
 
@@ -21,16 +22,88 @@ body {
   font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   line-height: 1.5;
   color: var(--text);
-
-  /* --- Add your hero image here --- */
   background-image: url('hero-background.jpg');
-  /* background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url('hero-background.jpg'); */
-
-  /* These properties ensure the image covers the screen nicely */
-  background-size: cover; /* Stretches the image to fill the screen */
-  background-position: center; /* Keeps the image centered */
-  background-attachment: fixed; /* Creates a cool parallax scrolling effect */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  transition: padding-top 0.3s ease-in-out; /* Smooth transition for padding */
 }
+
+/* == STYLES FOR FIXED & STICKY HEADERS == */
+
+.fixed-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 12px 0;
+  
+  /* Glassmorphism Style ✨ */
+  background: rgba(255, 255, 255, 0.75);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  transition: transform 0.3s ease-in-out;
+}
+
+
+.form-grid {
+  display: grid;
+  /* Start with 3 columns on larger screens for a compact layout */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* For tablet-sized screens, switch to 2 columns */
+@media (max-width: 992px) {
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* For mobile screens, stack into a single column */
+@media (max-width: 640px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+.fixed-header .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* This class is added by JS to push content down below the fixed header */
+body.results-visible {
+  padding-top: 80px; /* Adjust this to match your header's height */
+}
+
+/* We hide the original back button to avoid duplication when the fixed header is visible */
+.results-visible .results-top-action {
+  display: none;
+}
+
+/* This makes the flight details header sticky */
+#resultsHeader {
+  position: sticky;
+  top: 80px; /* This value MUST match the padding-top of body.results-visible */
+  z-index: 900;
+  
+  /* Add a background to prevent content from showing through when scrolling */
+  background: rgba(255, 255, 255, 0.9);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  
+  /* Add some padding to make it look good when stuck */
+  padding-top: 16px;
+  padding-bottom: 16px;
+  margin-top: -16px; /* Counteract parent padding to align nicely */
+}
+
+
 
 .container { width: min(1120px, 92vw); margin: 0 auto; }
 .site-header, .site-footer { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; }
@@ -44,9 +117,18 @@ body {
 .hero-title { font-size: clamp(28px, 5vw, 40px); margin: 2px 0 8px; }
 .hero-subtitle { color: var(--muted); margin: 0 0 22px; }
 
+/* Find and update your existing .card rule */
 .card {
-  background: var(--card);
-  border: 1px solid #202532;
+  /* MODIFIED: Use a more transparent background for the glass effect */
+  background: rgba(255, 255, 255, 0.6); 
+  
+  /* MODIFIED: Add the blur effect */
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+
+  /* MODIFIED: A faint border helps define the edges of the glass */
+  border: 1px solid rgba(255, 255, 255, 0.2); 
+  
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 24px;
@@ -70,7 +152,6 @@ body {
 .advanced-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 16px; }
 @media (max-width: 640px) { .advanced-grid { grid-template-columns: 1fr; } }
 .advanced-grid .field-row { margin-bottom: 0; }
-
 
 .actions { display: flex; gap: 10px; margin-top: 16px; }
 .btn, .ghost-btn {
@@ -107,6 +188,13 @@ body {
   text-align: center;
   margin-bottom: 24px;
 }
+
+/* Add this rule to hide the original header on the results page */
+.results-visible #siteHeader {
+  display: none;
+}
+
+
 .flight-route {
   display: flex;
   align-items: center;
@@ -141,11 +229,33 @@ body {
   margin: 0 8px;
 }
 
+/* Find and replace your existing .results-grid rule in styles.css */
 .results-grid {
   display: grid;
+  grid-template-columns: 1fr; /* A single column for stacking */
   gap: 24px;
-  max-width: 800px;
+  
+  /* Define the layout with named areas */
+  grid-template-areas:
+    "status"
+    "alternatives"; /* The alternatives card now sits directly below */
+
+  max-width: 1120px;
   margin: 0 auto;
+}
+
+/* --- Assign cards to their grid areas --- */
+#statusCard {
+  grid-area: status; /* This makes the status card span the full width */
+}
+
+#alternativesContainer {
+  grid-area: alternatives;
+}
+
+#cabContainer {
+  /* grid-area: cab; */
+  display: none;
 }
 
 .status-card { padding: 24px; }
@@ -157,8 +267,6 @@ body {
 .status-icon { font-size: 28px; }
 .status-header h2 { font-size: 22px; font-weight: 600; margin: 0; }
 .status-subtitle { color: var(--muted); margin: 0 0 24px; }
-
-
 
 /* === Visual Timeline Styles === */
 .visual-timeline {
@@ -224,10 +332,6 @@ body {
   font-weight: 600;
 }
 
-
-
-/* In styles.css, use these more specific rules */
-
 .status-card.delayed .delayed-time {
   color: var(--warn);
 }
@@ -236,7 +340,6 @@ body {
   color: var(--success);
 }
 
-/* This new rule makes the timeline bar green ONLY in the on-time view */
 .status-card.on-time .track-ontime {
   background-color: var(--success);
 }
@@ -261,21 +364,67 @@ body {
 
 .flex-between { display: flex; align-items: center; justify-content: space-between; }
 
+/* --- Redesigned Alternative Flight List --- */
 .alt-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px; 
 }
-.alt-flight-card { background-color: #0f131c; padding: 16px; border-radius: 12px; border: 1px solid #22293a; transition: transform 0.2s ease, border-color 0.2s; }
-.alt-flight-card:hover { transform: translateY(-2px); border-color: var(--primary); }
-.alt-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-.alt-airline-name { font-weight: 600; color: var(--text); }
-.highlight-benefit { font-size: 12px; font-weight: 700; padding: 4px 8px; border-radius: 12px; }
-.highlight-benefit.green-bg { background-color: rgba(34, 197, 94, 0.1); color: var(--success); }
-.alt-card-body p { font-size: 14px; color: var(--muted); margin: 4px 0; }
-.alt-card-body p strong { color: var(--text); }
-.alt-card-cta { width: 100%; padding: 10px; margin-top: 12px; background-color: var(--primary); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; }
-.alt-card-cta:hover { filter: brightness(1.1); }
+
+.alt-flight-item {
+  display: grid;
+  /* Create three columns with the middle one taking more space */
+  grid-template-columns: 1fr 1.5fr 1fr; 
+  align-items: center;
+  padding: 14px 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  gap: 16px;
+  text-align: center;
+}
+
+.alt-list > .alt-flight-item:last-child {
+  border-bottom: none;
+}
+
+/* Style for the header row */
+.alt-flight-header {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  padding-top: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.alt-detail {
+  font-size: 15px;
+}
+
+.airline-code {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.flight-id {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.flight-stats {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.flight-stats .saves-highlight {
+  color: var(--success);
+  font-weight: 500;
+}
+
+/* Utility class for a smaller button */
+.btn.small-btn {
+  padding: 8px 16px;
+  font-size: 14px;
+}
 
 .cab {
   margin-top: 0;
@@ -283,3 +432,16 @@ body {
 .cab .actions { justify-content: flex-end; }
 
 .hidden { display: none !important; }
+
+
+/* --- Responsive layout for smaller screens --- */
+@media (max-width: 768px) {
+  .results-grid {
+    grid-template-columns: 1fr; /* Switch to a single column */
+    grid-template-areas:
+      "status"
+      "alternatives"
+      "cab";
+    max-width: 800px; /* Revert to original max-width */
+  }
+}
